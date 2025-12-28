@@ -155,16 +155,7 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
-
-/* 캐러셀 전체 폭/높이 제한 */
-#results-carousel {
-  max-width: 900px;   /* 원하는 폭 */
-  margin: 0 auto;     /* 가운데 정렬 */
-}
-
-/* 비디오 높이 제한 + 비율 유지 */
-#results-carousel video {
-  width: 100%;
-  height: 360px;      /* 원하는 높이 */
-  object-fit: contain; /* 잘림 싫으면 contain, 꽉 채우려면 cover */
+.hero.is-light.is-small .hero-body{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
