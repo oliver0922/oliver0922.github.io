@@ -155,12 +155,3 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
-
-.slider-container .slider-item .video-container video,
-.results-carousel .video-container video {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover;
-}
