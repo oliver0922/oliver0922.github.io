@@ -167,7 +167,7 @@ section.hero.is-light.is-small {
 
 /* 캐러셀 전체를 더 작은 폭으로 (가운데 정렬 유지) */
 #results-carousel {
-  width: min(750px, 92vw);   /* 여기 숫자(820) 줄이면 더 작아짐 */
+  width: min(820px, 92vw);   /* 여기 숫자(820) 줄이면 더 작아짐 */
   margin: 0 auto;
   aspect-ratio: 16 / 9;      /* 비율 유지 */
 }
