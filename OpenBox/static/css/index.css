@@ -155,3 +155,20 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+.video-container {
+  position: relative;
+  height: 0;
+  padding-top: 56.25%; /* 16:9 */
+}
+
+.video-container.is-16by9 { padding-top: 56.25%; }
+
+.video-container video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  object-fit: cover;
+}
