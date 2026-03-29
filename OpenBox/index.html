@@ -192,7 +192,7 @@
 
 
 <!-- Scenario 1 -->
-<section class="hero is-light is-small">
+<section class="hero is-small">
   <div class="hero-body">
     <div class="container is-max-desktop has-text-centered">
       <h2 class="title is-4">Scenario 1: Closed-set Annotation</h2>
@@ -453,7 +453,7 @@
           </p>
         </div>
         <img src="./static/images/figure2.png" alt="OpenBox Pipeline Overview" style="width:100%; margin-bottom: 1rem;">
-        <p class="is-size-7 has-text-grey">Figure 2. Overview of the OpenBox pipeline. Left: Cross-modal instance alignment (Stage 1). Right: Adaptive bounding box generation (Stage 2).</p>
+        <p class="is-size-7 has-text-grey">Figure 1. Overview of the OpenBox pipeline. Left: Cross-modal instance alignment (Stage 1). Right: Adaptive bounding box generation (Stage 2).</p>
       </div>
     </div>
 
@@ -472,7 +472,7 @@
           </p>
         </div>
         <img src="./static/images/figure3.png" alt="Cross-modal Instance Alignment" style="width:100%; margin-bottom: 1rem;">
-        <p class="is-size-7 has-text-grey">Figure 3. Cross-modal instance alignment. Upper: HDBSCAN clustering on ground-removed LiDAR. Lower: Grounding DINO detections followed by SAM2 segmentation. Context-aware refinement fuses both proposals for refined per-object point clouds.</p>
+        <p class="is-size-7 has-text-grey">Figure 2. Cross-modal instance alignment. Upper: HDBSCAN clustering on ground-removed LiDAR. Lower: Grounding DINO detections followed by SAM2 segmentation. Context-aware refinement fuses both proposals for refined per-object point clouds.</p>
       </div>
     </div>
 
@@ -490,7 +490,7 @@
           </p>
         </div>
         <img src="./static/images/figure4.png" alt="Context-aware Refinement" style="width:100%; margin-bottom: 1rem;">
-        <p class="is-size-7 has-text-grey">Figure 4. Context-aware refinement. (a) Reference image. (b) Point cloud clusters after HDBSCAN on ground-removed LiDAR. (c) Noisy instance-level point clouds from mask unprojection. (d) Refined point clouds after context-aware refinement.</p>
+        <p class="is-size-7 has-text-grey">Figure 3. Context-aware refinement. (a) Reference image. (b) Point cloud clusters after HDBSCAN on ground-removed LiDAR. (c) Noisy instance-level point clouds from mask unprojection. (d) Refined point clouds after context-aware refinement.</p>
       </div>
     </div>
 
@@ -508,7 +508,7 @@
           </p>
         </div>
         <img src="./static/images/figure5.png" alt="Static-Rigid Instance Handling" style="width:100%; margin-bottom: 1rem;">
-        <p class="is-size-7 has-text-grey">Figure 5. Static-rigid instance handling. (a) Vertex-level voting on reconstructed SDF surface filters noisy points. (b) Surface normal vectors guide bounding box size adjustments; final box selection uses 2D IoU alignment.</p>
+        <p class="is-size-7 has-text-grey">Figure 4. Static-rigid instance handling. (a) Vertex-level voting on reconstructed SDF surface filters noisy points. (b) Surface normal vectors guide bounding box size adjustments; final box selection uses 2D IoU alignment.</p>
       </div>
     </div>
 
@@ -524,8 +524,8 @@
             unobserved surfaces. Final sizes are determined by statistical priors.
           </p>
         </div>
-        <img src="./static/images/figure6.png" alt="Dynamic Instance Box Extension" style="width:100%; margin-bottom: 1rem;">
-        <p class="is-size-7 has-text-grey">Figure 6. Visibility-based box extension for dynamic instances. Case 1: Single negative dot product yields one-sided extension. Case 2: Two negative values produce two-sided box extension.</p>
+        <img src="./static/images/figure6.png" alt="Dynamic Instance Box Extension" style="width:60%; margin-bottom: 1rem;">
+        <p class="is-size-7 has-text-grey">Figure 5. Visibility-based box extension for dynamic instances. Case 1: Single negative dot product yields one-sided extension. Case 2: Two negative values produce two-sided box extension.</p>
       </div>
     </div>
   </div>
@@ -544,7 +544,7 @@
     <!-- Figure 7: Annotation Comparisons -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <h3 class="title is-4">Annotation Comparison on WOD</h3>
+        <h3 class="title is-4">Annotation Comparison on Waymo Open Dataset</h3>
         <div class="content has-text-justified">
           <p>
             Qualitative comparison of automatically generated bounding boxes (blue) against human annotations (red)
@@ -554,7 +554,7 @@
           </p>
         </div>
         <img src="./static/images/figure7.png" alt="Qualitative Annotation Comparison" style="width:100%; margin-bottom: 1rem;">
-        <p class="is-size-7 has-text-grey">Figure 7. Qualitative annotation comparison on WOD training set. Blue: automatically generated boxes. Red: human annotations.</p>
+        <p class="is-size-7 has-text-grey">Figure 6. Qualitative annotation comparison on Waymo Open Dataset training set. Blue: automatically generated boxes. Red: human annotations.</p>
       </div>
     </div>
 
@@ -570,7 +570,7 @@
           </p>
         </div>
         <img src="./static/images/figure8.png" alt="Open-vocabulary Annotation Results" style="width:100%; margin-bottom: 1rem;">
-        <p class="is-size-7 has-text-grey">Figure 8. Open-vocabulary annotation results. Red point clouds and cyan bounding boxes show detected novel object classes (strollers, fire hydrants, dogs).</p>
+        <p class="is-size-7 has-text-grey">Figure 7. Open-vocabulary annotation results. Red point clouds and cyan bounding boxes show detected novel object classes (strollers, fire hydrants, dogs).</p>
       </div>
     </div>
   </div>
