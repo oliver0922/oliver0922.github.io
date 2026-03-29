@@ -89,6 +89,11 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-2 publication-title">OpenBox: Annotate Any Bounding Boxes in 3D</h1>
+          <div class="is-size-4" style="margin-bottom: 0.8rem;">
+            <span class="publication-venue">NeurIPS 2025</span>
+            &nbsp;
+            <span class="publication-awards">(Spotlight)</span>
+          </div>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://oliver0922.github.io/">In-Jae Lee</a><sup>1</sup>,</span>
@@ -186,58 +191,60 @@
 </section> -->
 
 
+<!-- Scenario 1 -->
 <section class="hero is-light is-small">
   <div class="hero-body">
-    <div class="container">
+    <div class="container is-max-desktop has-text-centered">
+      <h2 class="title is-4">Scenario 1: Closed-set Annotation</h2>
+      <p class="subtitle is-6" style="margin-bottom: 1rem;">Automatic 3D bounding box annotation for <strong>Vehicle</strong>, <strong>Pedestrian</strong>, and <strong>Cyclist</strong> classes.</p>
       <div id="results-carousel" class="carousel results-carousel">
         <div class="item item-1">
           <video poster="" id="1" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/1.mp4"
-                    type="video/mp4">
+            <source src="./static/videos/1.mp4" type="video/mp4">
           </video>
         </div>
         <div class="item item-2">
           <video poster="" id="2" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/2.mp4"
-                    type="video/mp4">
+            <source src="./static/videos/2.mp4" type="video/mp4">
           </video>
         </div>
         <div class="item item-3">
           <video poster="" id="3" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/3.mp4"
-                    type="video/mp4">
+            <source src="./static/videos/3.mp4" type="video/mp4">
           </video>
         </div>
         <div class="item item-4">
           <video poster="" id="4" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/4.mp4"
-                    type="video/mp4">
+            <source src="./static/videos/4.mp4" type="video/mp4">
           </video>
         </div>
-        <!-- <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Scenario 2 -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h2 class="title is-4">Scenario 2: Open-vocabulary Annotation</h2>
+      <p class="subtitle is-6" style="margin-bottom: 1rem;">Automatic annotation for <strong>open-vocabulary</strong> classes beyond standard dataset categories.</p>
+      <div id="results-carousel-2" class="carousel results-carousel">
+        <div class="item item-5">
+          <video poster="" id="5" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/5.mp4" type="video/mp4">
           </video>
-        </div> -->
-        <!-- <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
+        </div>
+        <div class="item item-6">
+          <video poster="" id="6" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/6.mp4" type="video/mp4">
           </video>
-        </div> -->
-        <!-- <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
+        </div>
+        <div class="item item-7">
+          <video poster="" id="7" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/7.mp4" type="video/mp4">
           </video>
-        </div> -->
-        <!-- <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video> 
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
@@ -419,6 +426,153 @@
     </div> -->
     <!--/ Concurrent Work. -->
 
+  </div>
+</section>
+
+
+<!-- Method Section -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method</h2>
+      </div>
+    </div>
+
+    <!-- Figure 2: Pipeline Overview -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h3 class="title is-4">Pipeline Overview</h3>
+        <div class="content has-text-justified">
+          <p>
+            OpenBox is a two-stage automatic annotation pipeline that leverages 2D vision foundation models.
+            In the first stage, <strong>Cross-modal Instance Alignment</strong> associates instance-level cues
+            from 2D images with the corresponding 3D point clouds. In the second stage,
+            <strong>Adaptive 3D Bounding Box Generation</strong> categorizes instances by rigidity and motion state,
+            then generates adaptive bounding boxes with class-specific size statistics.
+          </p>
+        </div>
+        <img src="./static/images/figure2.png" alt="OpenBox Pipeline Overview" style="width:100%; margin-bottom: 1rem;">
+        <p class="is-size-7 has-text-grey">Figure 2. Overview of the OpenBox pipeline. Left: Cross-modal instance alignment (Stage 1). Right: Adaptive bounding box generation (Stage 2).</p>
+      </div>
+    </div>
+
+    <!-- Figure 3: Cross-modal Instance Alignment -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h3 class="title is-4">Stage 1: Cross-modal Instance Alignment</h3>
+        <div class="content has-text-justified">
+          <p>
+            The pipeline maps 2D image information to 3D point clouds using vision foundation models.
+            Grounding DINO generates 2D detections and SAM2 refines them into precise instance masks.
+            These masks are unprojected onto the point cloud using camera calibration.
+            In parallel, HDBSCAN clustering on ground-removed LiDAR produces coarse 3D clusters.
+            Context-aware refinement then fuses both proposals, discarding noisy points and incorporating
+            adjacent point cloud cluster points for refined per-object point clouds.
+          </p>
+        </div>
+        <img src="./static/images/figure3.png" alt="Cross-modal Instance Alignment" style="width:100%; margin-bottom: 1rem;">
+        <p class="is-size-7 has-text-grey">Figure 3. Cross-modal instance alignment. Upper: HDBSCAN clustering on ground-removed LiDAR. Lower: Grounding DINO detections followed by SAM2 segmentation. Context-aware refinement fuses both proposals for refined per-object point clouds.</p>
+      </div>
+    </div>
+
+    <!-- Figure 4: Context-aware Refinement -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h3 class="title is-4">Context-aware Refinement</h3>
+        <div class="content has-text-justified">
+          <p>
+            To address noisy point clouds caused by LiDAR projections onto occluding background objects,
+            the method performs majority voting across clustered regions obtained via HDBSCAN.
+            For each cluster, bidirectional proximity-based inclusion ratios determine whether clusters
+            overlap sufficiently with instance-level point clouds. Clusters meeting overlap thresholds
+            receive instance IDs and are retained; others are discarded.
+          </p>
+        </div>
+        <img src="./static/images/figure4.png" alt="Context-aware Refinement" style="width:100%; margin-bottom: 1rem;">
+        <p class="is-size-7 has-text-grey">Figure 4. Context-aware refinement. (a) Reference image. (b) Point cloud clusters after HDBSCAN on ground-removed LiDAR. (c) Noisy instance-level point clouds from mask unprojection. (d) Refined point clouds after context-aware refinement.</p>
+      </div>
+    </div>
+
+    <!-- Figure 5: Static-Rigid Instance Handling -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h3 class="title is-4">Stage 2: Adaptive Bounding Box Generation</h3>
+        <div class="content has-text-justified">
+          <p>
+            Instances are categorized into three physical types: <em>rigid-static</em>, <em>rigid-dynamic</em>, and <em>deformable</em>.
+            For static-rigid instances, surface-aware filtering suppresses noise through proximity voting on
+            reconstructed mesh vertices using Signed Distance Functions (SDF). Surface normal vectors then determine
+            resizing directions for bounding box refinement, and final box selection compares 3D candidates against
+            2D bounding boxes through 2D IoU alignment across multiple views.
+          </p>
+        </div>
+        <img src="./static/images/figure5.png" alt="Static-Rigid Instance Handling" style="width:100%; margin-bottom: 1rem;">
+        <p class="is-size-7 has-text-grey">Figure 5. Static-rigid instance handling. (a) Vertex-level voting on reconstructed SDF surface filters noisy points. (b) Surface normal vectors guide bounding box size adjustments; final box selection uses 2D IoU alignment.</p>
+      </div>
+    </div>
+
+    <!-- Figure 6: Dynamic Instance Handling -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h3 class="title is-4">Dynamic Instance Box Extension</h3>
+        <div class="content has-text-justified">
+          <p>
+            For dynamic-rigid instances, object orientation is aligned with position differences across adjacent frames
+            using 2D tracking IDs. After orientation alignment, box size refinement uses dot products between surface
+            normals and LiDAR ray directions. Boxes extend only when these dot products are negative, indicating
+            unobserved surfaces. Final sizes are determined by statistical priors.
+          </p>
+        </div>
+        <img src="./static/images/figure6.png" alt="Dynamic Instance Box Extension" style="width:100%; margin-bottom: 1rem;">
+        <p class="is-size-7 has-text-grey">Figure 6. Visibility-based box extension for dynamic instances. Case 1: Single negative dot product yields one-sided extension. Case 2: Two negative values produce two-sided box extension.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Qualitative Results Section -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Qualitative Results</h2>
+      </div>
+    </div>
+
+    <!-- Figure 7: Annotation Comparisons -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h3 class="title is-4">Annotation Comparison on WOD</h3>
+        <div class="content has-text-justified">
+          <p>
+            Qualitative comparison of automatically generated bounding boxes (blue) against human annotations (red)
+            on the Waymo Open Dataset training set. OpenBox recognizes static instances that baselines miss
+            (Region A: static travel trailer), successfully detects objects in challenging scenarios like garage interiors
+            with sparse points (Region B), and achieves improved localization accuracy for opposite-lane vehicles (Region C).
+          </p>
+        </div>
+        <img src="./static/images/figure7.png" alt="Qualitative Annotation Comparison" style="width:100%; margin-bottom: 1rem;">
+        <p class="is-size-7 has-text-grey">Figure 7. Qualitative annotation comparison on WOD training set. Blue: automatically generated boxes. Red: human annotations.</p>
+      </div>
+    </div>
+
+    <!-- Figure 8: Open-vocabulary Results -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h3 class="title is-4">Open-vocabulary Annotation</h3>
+        <div class="content has-text-justified">
+          <p>
+            OpenBox enables open-vocabulary detection of object categories beyond standard dataset classes,
+            which is essential for real-world autonomous driving scenarios. The figure demonstrates automatic
+            3D bounding box annotation for novel object classes such as strollers, fire hydrants, and dogs.
+          </p>
+        </div>
+        <img src="./static/images/figure8.png" alt="Open-vocabulary Annotation Results" style="width:100%; margin-bottom: 1rem;">
+        <p class="is-size-7 has-text-grey">Figure 8. Open-vocabulary annotation results. Red point clouds and cyan bounding boxes show detected novel object classes (strollers, fire hydrants, dogs).</p>
+      </div>
+    </div>
   </div>
 </section>
 
