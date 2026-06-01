@@ -129,23 +129,15 @@ name {
 span.highlight {
   background-color: #ffffd0;
 }
-/* ClustrMaps globe size control */
+/* MapMyVisitors globe size control */
 .clustr-wrap {
-  width: 550px;   /* 원하는 표시 크기 */
-  height: 550px;  /* 원하는 표시 크기 */
-  position: relative;
-  overflow: hidden;  /* 잘려 나가도 깔끔하게 */
+  width: 200px;
+  max-width: 100%;
   margin: 0 auto;
 }
-.clustr-wrap * {
-  position: absolute;
-  inset: 0;
-  transform: scale(0.65);   /* 축소 비율만 바꾸면 크기 조절 */
-  transform-origin: top;
-}
 
-/* 모바일에서 더 작게 */
 @media (max-width: 640px) {
-  .clustr-wrap { width: 160px; height: 160px; }
-  .clustr-wrap * { transform: scale(0.5); }
+  .clustr-wrap {
+    width: 160px;
+  }
 }
