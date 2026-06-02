@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "injaelee-visit-log",
+  "main": "src/index.js",
+  "compatibility_date": "2026-06-02",
+  "workers_dev": true,
+  "preview_urls": false,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "injaelee-visit-log",
+      "database_id": "4c5ef165-334f-428e-94aa-34cd7428cc8e"
+    }
+  ],
+  "vars": {
+    "ALLOWED_ORIGIN": "https://oliver0922.github.io",
+    "RETENTION_DAYS": "90"
+  },
+  "secrets": {
+    "required": [
+      "ADMIN_TOKEN"
+    ]
+  },
+  "triggers": {
+    "crons": [
+      "17 3 * * *"
+    ]
+  }
+}
