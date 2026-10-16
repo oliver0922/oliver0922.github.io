@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AmodalBox uses image-generated 3D assets to automatically annotate complete 3D bounding boxes under partial visibility. CoRL 2026.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="AmodalBox: Automated 3D Bounding Box Annotation under Partial Visibility">
+  <meta property="og:description" content="Recovering complete 3D object extents from partial observations with image-generated 3D assets.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./static/images/teaser.webp">
+  <title>AmodalBox: Automated 3D Bounding Box Annotation under Partial Visibility</title>
+  <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./static/css/style.css?v=3">
+  <script src="./static/js/main.js?v=2" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="wordmark" href="#top">Amodal<span>Box</span></a>
+      <div class="nav-links">
+        <a href="#demos">Demos</a>
+        <a class="extended-nav" href="#open-vocabulary">Open vocab</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a class="extended-nav" href="#ablation">Ablation</a>
+        <a class="extended-nav" href="#supplement">Supplement</a>
+        <a class="related-link" href="../OpenBox/">OpenBox <span aria-hidden="true">↗</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero container" id="top" aria-labelledby="paper-title">
+      <p class="venue">Conference on Robot Learning <span>2026</span></p>
+      <h1 id="paper-title"><span class="project-name">AmodalBox</span><span class="paper-subtitle">Automated 3D Bounding Box Annotation<br class="desktop-break"> under Partial Visibility</span></h1>
+      <div class="authors">
+        <span><a href="../">In-Jae Lee</a><sup>1</sup></span>
+        <span>Namtae Kim<sup>1</sup></span>
+        <span>Robert Exley<sup>2</sup></span>
+        <span><a href="https://scholar.google.com/citations?user=ZqM8_24AAAAJ">Kwonyoung Ryu</a><sup>3</sup></span>
+        <span><a href="https://jaesik.info/">Jaesik Park</a><sup>1</sup></span>
+      </div>
+      <p class="affiliations"><span><sup>1</sup>Seoul National University</span><span><sup>2</sup>University of Pittsburgh</span><span><sup>3</sup>POSTECH</span></p>
+      <div class="publication-links">
+        <a class="button button-primary" href="./static/paper/AmodalBox.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M8 13h8M8 17h6"/></svg>Paper</a>
+        <a class="button" href="#demos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m10 8 6 4-6 4z"/></svg>Video demos</a>
+        <a class="button" href="#citation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 5H5v6h4v2c0 3-2 5-4 6M19 5h-4v6h4v2c0 3-2 5-4 6"/></svg>BibTeX</a>
+      </div>
+      <figure class="teaser">
+        <a class="figure-link" href="./static/images/teaser.webp" target="_blank" rel="noopener" aria-label="Open annotation overview at full resolution"><img src="./static/images/teaser.webp" width="2400" height="1310" alt="AmodalBox annotations in a nuScenes driving scene, with close-ups of cars, a bicycle, a cyclist and a person." fetchpriority="high"></a>
+        <figcaption><strong>Complete object extents, even with partial observations.</strong><br>AmodalBox aligns image-generated 3D assets with sparse LiDAR to recover amodal bounding boxes.</figcaption>
+        <div class="legend" aria-label="Annotation colors"><span><i class="swatch ours"></i>AmodalBox</span><span><i class="swatch baseline"></i>Baseline</span><span><i class="swatch human"></i>Human annotation</span></div>
+      </figure>
+    </section>
+
+    <section class="section tinted" id="demos" aria-labelledby="demos-title">
+      <div class="container">
+        <div class="section-heading centered"><p class="eyebrow">See the annotations</p><h2 id="demos-title">Qualitative comparisons</h2><p>Three examples from the supplementary presentation. Red dashed circles highlight the differences between OpenBox and AmodalBox.</p></div>
+        <nav class="example-links" aria-label="Video examples"><a href="#example-1">Example 1</a><a href="#example-2">Example 2</a><a href="#example-3">Example 3</a></nav>
+        <article class="comparison-scene" id="example-1" data-comparison data-duration="5.7" data-inspect-time="1.2" aria-labelledby="example-1-title">
+          <div class="scene-heading"><span class="example-number">Example 1</span><h3 id="example-1-title">Distant, partial observations</h3></div>
+          <div class="comparison-grid">
+            <figure class="video-panel">
+              <div class="video-frame">
+                <video data-method="openbox" poster="./static/images/scene20-openbox-preview.jpg" controls muted playsinline preload="none" width="720" height="496" aria-label="OpenBox, example 1"><source src="./static/videos/scene20-openbox.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+                <img class="video-highlight" src="./static/images/scene20-openbox-overlay.svg" width="720" height="496" data-start="1.0" data-end="2.0" alt="" aria-hidden="true" hidden>
+              </div>
+              <figcaption>OpenBox</figcaption>
+            </figure>
+            <figure class="video-panel featured">
+              <div class="video-frame">
+                <video data-method="amodalbox" poster="./static/images/scene20-amodalbox-preview.jpg" controls muted playsinline preload="none" width="720" height="496" aria-label="AmodalBox (Ours), example 1"><source src="./static/videos/scene20-amodalbox.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+                <img class="video-highlight" src="./static/images/scene20-amodalbox-overlay.svg" width="720" height="496" data-start="1.0" data-end="2.0" alt="" aria-hidden="true" hidden>
+              </div>
+              <figcaption>AmodalBox (Ours)</figcaption>
+            </figure>
+            <figure class="video-panel">
+              <div class="video-frame">
+                <video data-method="human" poster="./static/images/scene20-human-preview.jpg" controls muted playsinline preload="none" width="720" height="496" aria-label="Human Annotation, example 1"><source src="./static/videos/scene20-human.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+              </div>
+              <figcaption>Human Annotation</figcaption>
+            </figure>
+          </div>
+          <div class="playback-controls" hidden>
+            <button class="button play-button" data-play type="button" aria-label="Play all three videos in example 1"><span data-play-icon aria-hidden="true">▶</span><span data-play-label>Play comparison</span></button>
+            <label class="sr-only" for="progress-1">Example 1 video position</label><input id="progress-1" data-progress type="range" min="0" max="5.7" value="0" step="0.05" aria-valuetext="0 seconds" disabled>
+            <output class="video-time" data-time for="progress-1">0:00 / 0:05</output>
+            <button class="restart-button" data-restart type="button" aria-label="Restart example 1">↺</button>
+          </div>
+          <div class="highlight-controls" hidden><button type="button" class="inspect-button" data-inspect>Inspect highlighted frame</button><label><input type="checkbox" data-highlight-toggle checked>Show red highlights</label></div>
+          <p class="scene-caption">OpenBox can sometimes produce mislocalized boxes because it relies only on distant, partially observed point clouds for annotation. In contrast, AmodalBox first recovers the full object extent and then generates the bounding box, making it less vulnerable to this issue.</p>
+          <p class="demo-status" data-status role="status" aria-live="polite"></p>
+        </article>
+        <article class="comparison-scene" id="example-2" data-comparison data-duration="2.3" data-inspect-time="1.2" aria-labelledby="example-2-title">
+          <div class="scene-heading"><span class="example-number">Example 2</span><h3 id="example-2-title">Height localization</h3></div>
+          <div class="comparison-grid">
+            <figure class="video-panel">
+              <div class="video-frame">
+                <video data-method="openbox" poster="./static/images/scene0-openbox-preview.jpg" controls muted playsinline preload="none" width="720" height="496" aria-label="OpenBox, example 2"><source src="./static/videos/scene0-openbox.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+                <img class="video-highlight" src="./static/images/scene0-openbox-overlay.svg" width="720" height="496" data-start="1.0" data-end="" alt="" aria-hidden="true" hidden>
+              </div>
+              <figcaption>OpenBox</figcaption>
+            </figure>
+            <figure class="video-panel featured">
+              <div class="video-frame">
+                <video data-method="amodalbox" poster="./static/images/scene0-amodalbox-preview.jpg" controls muted playsinline preload="none" width="720" height="496" aria-label="AmodalBox (Ours), example 2"><source src="./static/videos/scene0-amodalbox.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+                <img class="video-highlight" src="./static/images/scene0-amodalbox-overlay.svg" width="720" height="496" data-start="1.0" data-end="" alt="" aria-hidden="true" hidden>
+              </div>
+              <figcaption>AmodalBox (Ours)</figcaption>
+            </figure>
+            <figure class="video-panel">
+              <div class="video-frame">
+                <video data-method="human" poster="./static/images/scene0-human-preview.jpg" controls muted playsinline preload="none" width="720" height="496" aria-label="Human Annotation, example 2"><source src="./static/videos/scene0-human.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+              </div>
+              <figcaption>Human Annotation</figcaption>
+            </figure>
+          </div>
+          <div class="playback-controls" hidden>
+            <button class="button play-button" data-play type="button" aria-label="Play all three videos in example 2"><span data-play-icon aria-hidden="true">▶</span><span data-play-label>Play comparison</span></button>
+            <label class="sr-only" for="progress-2">Example 2 video position</label><input id="progress-2" data-progress type="range" min="0" max="2.3" value="0" step="0.05" aria-valuetext="0 seconds" disabled>
+            <output class="video-time" data-time for="progress-2">0:00 / 0:02</output>
+            <button class="restart-button" data-restart type="button" aria-label="Restart example 2">↺</button>
+          </div>
+          <div class="highlight-controls" hidden><button type="button" class="inspect-button" data-inspect>Inspect highlighted frame</button><label><input type="checkbox" data-highlight-toggle checked>Show red highlights</label></div>
+          <p class="scene-caption">OpenBox relies on local point clouds for height refinement, so when local points are missing, the box can be shifted downward. AmodalBox instead aligns a 3D asset through matching and generates the box from the aligned asset, leading to more precise localization.</p>
+          <p class="demo-status" data-status role="status" aria-live="polite"></p>
+        </article>
+        <article class="comparison-scene" id="example-3" data-comparison data-duration="7.1" data-inspect-time="4.2" aria-labelledby="example-3-title">
+          <div class="scene-heading"><span class="example-number">Example 3</span><h3 id="example-3-title">Pedestrian recall</h3></div>
+          <div class="comparison-grid">
+            <figure class="video-panel">
+              <div class="video-frame">
+                <video data-method="openbox" poster="./static/images/scene2-openbox-preview.jpg" controls muted playsinline preload="none" width="720" height="496" aria-label="OpenBox, example 3"><source src="./static/videos/scene2-openbox.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+                <img class="video-highlight" src="./static/images/scene2-openbox-overlay.svg" width="720" height="496" data-start="0.0" data-end="" alt="" aria-hidden="true" hidden>
+              </div>
+              <figcaption>OpenBox</figcaption>
+            </figure>
+            <figure class="video-panel featured">
+              <div class="video-frame">
+                <video data-method="amodalbox" poster="./static/images/scene2-amodalbox-preview.jpg" controls muted playsinline preload="none" width="720" height="496" aria-label="AmodalBox (Ours), example 3"><source src="./static/videos/scene2-amodalbox.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+                <img class="video-highlight" src="./static/images/scene2-amodalbox-overlay.svg" width="720" height="496" data-start="0.0" data-end="" alt="" aria-hidden="true" hidden>
+              </div>
+              <figcaption>AmodalBox (Ours)</figcaption>
+            </figure>
+            <figure class="video-panel">
+              <div class="video-frame">
+                <video data-method="human" poster="./static/images/scene2-human-preview.jpg" controls muted playsinline preload="none" width="720" height="496" aria-label="Human Annotation, example 3"><source src="./static/videos/scene2-human.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+              </div>
+              <figcaption>Human Annotation</figcaption>
+            </figure>
+          </div>
+          <div class="playback-controls" hidden>
+            <button class="button play-button" data-play type="button" aria-label="Play all three videos in example 3"><span data-play-icon aria-hidden="true">▶</span><span data-play-label>Play comparison</span></button>
+            <label class="sr-only" for="progress-3">Example 3 video position</label><input id="progress-3" data-progress type="range" min="0" max="7.1" value="0" step="0.05" aria-valuetext="0 seconds" disabled>
+            <output class="video-time" data-time for="progress-3">0:00 / 0:07</output>
+            <button class="restart-button" data-restart type="button" aria-label="Restart example 3">↺</button>
+          </div>
+          <div class="highlight-controls" hidden><button type="button" class="inspect-button" data-inspect>Inspect highlighted frame</button><label><input type="checkbox" data-highlight-toggle checked>Show red highlights</label></div>
+          <p class="scene-caption">OpenBox may miss pedestrians when the unprojected instance-level point cloud is filtered out during refinement. AmodalBox avoids this failure mode, achieving higher recall and successfully annotating those pedestrians.</p>
+          <p class="demo-status" data-status role="status" aria-live="polite"></p>
+        </article>
+        <noscript><p class="demo-caption">Enable JavaScript for synchronized playback and animated highlights. Each video also has its own playback controls.</p></noscript>
+      </div>
+    </section>
+
+    <section class="section container" id="open-vocabulary" aria-labelledby="open-vocabulary-title">
+      <div class="section-heading centered"><p class="eyebrow">Novel categories</p><h2 id="open-vocabulary-title">Open-vocabulary examples</h2><p>AmodalBox annotates novel categories such as strollers and stones by aligning generated 3D assets with observed geometry.</p></div>
+      <div class="novel-examples">
+        <figure class="paper-figure">
+          <a class="figure-link" href="./static/images/open-vocabulary-stroller.webp" target="_blank" rel="noopener" aria-label="Open the stroller example at full resolution"><img src="./static/images/open-vocabulary-stroller.webp" width="1600" height="798" loading="lazy" alt="Stroller example: an image crop on the left and its aligned 3D asset with a cyan AmodalBox bounding box on the right."></a>
+          <figcaption><strong>Stroller.</strong> Image observation and AmodalBox 3D annotation.</figcaption>
+        </figure>
+        <figure class="paper-figure">
+          <a class="figure-link" href="./static/images/open-vocabulary-stone.webp" target="_blank" rel="noopener" aria-label="Open the stone example at full resolution"><img src="./static/images/open-vocabulary-stone.webp" width="1600" height="820" loading="lazy" alt="Stone example: an image crop on the left and its aligned 3D asset with a cyan AmodalBox bounding box on the right."></a>
+          <figcaption><strong>Stone.</strong> Image observation and AmodalBox 3D annotation.</figcaption>
+        </figure>
+      </div>
+      <p class="figure-source">Novel-class examples from the rebuttal, Figure 1(B). <a href="./static/paper/AmodalBox-rebuttal-examples.pdf" target="_blank" rel="noopener">View the original figure</a>.</p>
+      <div class="study-block novel-evaluation">
+        <h3>Base and novel class evaluation</h3>
+        <p>Additional nuScenes results under the base/novel split used by OVM3D-Det.</p>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="nuScenes base and novel class results"><table class="study-table"><caption class="sr-only">Base and novel class AP from rebuttal Table 1.</caption><thead><tr><th scope="col">Method</th><th scope="col">Base AP<sub>B</sub> ↑</th><th scope="col">Novel AP<sub>N</sub> ↑</th></tr></thead><tbody><tr><th scope="row">OVM3D-Det</th><td>13.3</td><td>11.8</td></tr><tr class="default-row"><th scope="row">AmodalBox</th><td>26.5</td><td>23.2</td></tr></tbody></table></div>
+        <p class="table-note">Baseline values are as reported by OVM3D-Det; AmodalBox is evaluated under the same protocol. AP<sub>B</sub> and AP<sub>N</sub> refer to that method’s base and novel class splits. The qualitative examples above are separate illustrations. Source: rebuttal, Table 1.</p>
+      </div>
+    </section>
+
+    <section class="section container" id="abstract" aria-labelledby="abstract-title">
+      <div class="reading-width"><h2 id="abstract-title">Abstract</h2><p>Recent progress in vision foundation models has made automated open-vocabulary 3D bounding box annotation increasingly feasible by jointly leveraging LiDAR point clouds and images. However, partial observations remain a major challenge in sparse driving scenes, where visible LiDAR points often cover only a small fraction of an object’s surface and provide insufficient cues for estimating its full spatial extent.</p><p>We propose <strong>AmodalBox</strong>, an automated annotation framework that uses <strong>image-generated 3D assets as amodal geometric priors</strong> for partially observed objects. Correspondences between input images and rendered asset views align canonical amodal geometry with world-space LiDAR point clouds. To improve temporal consistency and reduce computation, AmodalBox generates a single asset per instance, estimates its metric scale once for dynamic instances, and aggregates multi-frame observations for static instances. Detectors trained on these annotations achieve <strong>42.8 mAP on nuScenes</strong> and <strong>82.94 vehicle AP at IoU 0.5 on Waymo</strong>.</p></div>
+    </section>
+
+    <section class="section container method-section" id="method" aria-labelledby="method-title">
+      <div class="section-heading centered"><p class="eyebrow">How it works</p><h2 id="method-title">Amodal geometry for 3D annotation</h2><p>Use the visible image to infer an object’s shape, then align it to the observed scene.</p></div>
+      <figure class="paper-figure"><a class="figure-link" href="./static/images/pipeline.webp" target="_blank" rel="noopener" aria-label="Open pipeline diagram at full resolution"><img src="./static/images/pipeline.webp" width="2400" height="584" loading="lazy" alt="Pipeline: input images and LiDAR, instance and motion cues, SAM 3D asset generation, feature matching and motion-aware alignment, and 3D bounding box annotation."></a><figcaption>Pipeline overview. AmodalBox combines image-based shape priors with the metric geometry of LiDAR observations.</figcaption></figure>
+      <div class="method-steps">
+        <article><span class="step-number">01</span><h3>Instance &amp; motion cues</h3><p>Associate image masks with LiDAR points and track objects across frames to obtain instance-level geometry and motion cues.</p></article>
+        <article><span class="step-number">02</span><h3>One asset per instance</h3><p>Generate a canonical 3D asset from an anchor image. Its complete shape provides a geometric prior for surfaces missing from LiDAR.</p></article>
+        <article><span class="step-number">03</span><h3>Align &amp; annotate</h3><p>Match real images to rendered asset views, lift the matches to 3D correspondences, and fit bounding boxes to the aligned geometry.</p></article>
+      </div>
+      <div class="subsection-heading"><h3>Motion-aware temporal alignment</h3><p>Static and dynamic objects share a shape prior, with alignment tailored to their motion.</p></div>
+      <figure class="paper-figure"><a class="figure-link" href="./static/images/alignment.webp" target="_blank" rel="noopener" aria-label="Open motion-aware alignment diagram at full resolution"><img src="./static/images/alignment.webp" width="2400" height="954" loading="lazy" alt="Image-to-render feature correspondences and temporal alignment strategies for static and dynamic instances."></a></figure>
+      <div class="alignment-notes"><p><strong>Static instances.</strong> Aggregate correspondences across frames to improve the estimate of a single world-space alignment.</p><p><strong>Dynamic instances.</strong> Estimate metric scale at an anchor frame, then update pose over time while preserving the instance’s scale.</p></div>
+    </section>
+
+    <section class="section tinted" id="results" aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-heading centered"><p class="eyebrow">Experiments</p><h2 id="results-title">Better annotations, stronger detectors</h2><p>3D detection performance of models trained on automatically generated annotations.</p></div>
+        <div class="key-results"><div><strong>42.8<span>mAP</span></strong><p>nuScenes validation</p></div><div><strong>37.6<span>NDS</span></strong><p>nuScenes validation</p></div><div><strong>82.94<span>AP<sub>3D</sub></span></strong><p>Waymo vehicle · IoU 0.5</p></div></div>
+        <div class="results-block"><h3>nuScenes</h3><p>Detection performance across the ten nuScenes classes. Higher is better.</p><div class="table-scroll" tabindex="0" role="region" aria-label="nuScenes results table"><table><caption class="sr-only">nuScenes validation results, summarized from Table 1 of the paper.</caption><thead><tr><th scope="col">Method</th><th scope="col">mAP ↑</th><th scope="col">NDS ↑</th></tr></thead><tbody><tr><th scope="row">UP-VL</th><td>11.3</td><td>17.2</td></tr><tr><th scope="row">Find n’ Propagate</th><td>16.7</td><td>22.4</td></tr><tr><th scope="row">OpenSight</th><td>22.9</td><td>23.3</td></tr><tr><th scope="row">AnnofreeOD</th><td>22.4</td><td>26.4</td></tr><tr><th scope="row">OV-SCAN</th><td>31.1</td><td>32.8</td></tr><tr><th scope="row">OV-SCAN<sup>†</sup></th><td>28.7</td><td>31.4</td></tr><tr class="ours-row"><th scope="row">AmodalBox <span>(Ours)</span></th><td>42.8</td><td>37.6</td></tr></tbody></table></div><p class="table-note"><sup>†</sup> OV-SCAN trained with TransFusion without its semantic alignment head. AmodalBox improves mAP by 14.1 points over this variant and by 11.7 points over OV-SCAN. Source: paper, Table 1.</p></div>
+        <div class="results-block"><h3>Waymo Open Dataset</h3><p>Scenario 1 results. Each column reports AP<sub>3D</sub> at the indicated IoU threshold.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Waymo results table, scroll horizontally on smaller screens"><table class="waymo-table"><caption class="sr-only">Waymo Open Dataset Scenario 1 detection results from Table 2a of the paper.</caption><thead><tr><th scope="col" rowspan="2">Method</th><th scope="colgroup" colspan="2">Vehicle</th><th scope="colgroup" colspan="2">Pedestrian</th><th scope="colgroup" colspan="2">Cyclist</th></tr><tr><th scope="col">IoU 0.5</th><th scope="col">IoU 0.7</th><th scope="col">IoU 0.3</th><th scope="col">IoU 0.5</th><th scope="col">IoU 0.3</th><th scope="col">IoU 0.5</th></tr></thead><tbody><tr><th scope="row">CPD</th><td>30.30</td><td>20.90</td><td>14.28</td><td>11.22</td><td>3.47</td><td>3.08</td></tr><tr><th scope="row">OpenBox</th><td>70.49</td><td>32.41</td><td>57.95</td><td>17.11</td><td><strong>20.81</strong></td><td>2.15</td></tr><tr class="ours-row"><th scope="row">AmodalBox</th><td>82.94</td><td>36.16</td><td>55.92</td><td>6.41</td><td>12.11</td><td>9.33</td></tr><tr><th scope="row">AmodalBox<sup>*</sup></th><td><strong>84.37</strong></td><td><strong>47.88</strong></td><td><strong>65.18</strong></td><td><strong>20.66</strong></td><td>13.16</td><td><strong>9.63</strong></td></tr></tbody></table></div><p class="table-note"><sup>*</sup> Training annotations combine OpenBox and AmodalBox with class-wise non-maximum suppression. Bold numbers indicate the best value in each column. Source: paper, Table 2a. See the paper for Scenario 2 and the full evaluation protocol.</p></div>
+      </div>
+    </section>
+
+    <section class="section container" aria-labelledby="visibility-title">
+      <div class="section-heading centered"><p class="eyebrow">Partial visibility</p><h2 id="visibility-title">Recovering the missing extent</h2><p>Amodal shape priors help localize objects when only part of their surface is observed.</p></div>
+      <figure class="paper-figure"><a class="figure-link" href="./static/images/comparison.webp" target="_blank" rel="noopener" aria-label="Open qualitative results at full resolution"><img src="./static/images/comparison.webp" width="2400" height="1025" loading="lazy" alt="Qualitative comparisons of 3D bounding box annotations under partial observations."></a><figcaption>nuScenes (left) and Waymo (right). Red boxes show human labels, blue boxes show automated annotations, and colored points show aligned amodal assets.</figcaption></figure>
+      <div class="visibility-analysis"><div><h3>Performance across visibility levels</h3><p>Detectors trained on AmodalBox annotations improve mAP across all four official nuScenes camera visibility bins. The comparison highlights the benefit of complete shape priors when observed geometry is sparse.</p><p class="small-note">Full details, ablations, and limitations are available in the <a href="./static/paper/AmodalBox.pdf" target="_blank" rel="noopener">paper and appendix</a>.</p></div><figure><a class="figure-link" href="./static/images/visibility.webp" target="_blank" rel="noopener" aria-label="Open visibility analysis chart at full resolution"><img src="./static/images/visibility.webp" width="2400" height="1458" loading="lazy" alt="Downstream 3D detector mAP across four nuScenes camera visibility bins."></a></figure></div>
+    </section>
+
+    <section class="section container" id="ablation" aria-labelledby="ablation-title">
+      <div class="section-heading centered"><p class="eyebrow">Ablation study</p><h2 id="ablation-title">What contributes to annotation quality?</h2><p>Generated annotations are evaluated directly against human labels on 50 randomly sampled nuScenes training scenes.</p></div>
+      <div class="study-block">
+        <h3>From partial LiDAR to amodal boxes</h3>
+        <p>3D asset generation and matching add 21.05 mAP. Motion-aware alignment adds another 6.78 mAP by sharing instance geometry across frames.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Module ablation on 50 nuScenes training scenes"><table class="study-table">
+<caption class="sr-only">Module ablation on 50 nuScenes training scenes</caption>
+<thead><tr><th scope="col">Annotation pipeline</th><th scope="col">mAP ↑</th><th scope="col">NDS ↑</th></tr></thead>
+<tbody>
+<tr><th scope="row">Partial LiDAR only</th><td>3.57</td><td>5.76</td></tr>
+<tr><th scope="row">+ 3D asset generation &amp; matching</th><td>24.62</td><td>26.30</td></tr>
+<tr class="default-row"><th scope="row">+ Motion-aware alignment (full)</th><td>31.40</td><td>31.13</td></tr>
+</tbody></table></div>
+<p class="table-note">Modules are added incrementally. These are direct annotation results, separate from the downstream detector results above. <a href="./static/paper/AmodalBox.pdf#page=8" target="_blank" rel="noopener">Table 4a</a>.</p>
+      </div>
+      <div class="study-block">
+        <h3>Correspondence and scale prior</h3>
+        <p>Dense matching improves mAP by 9.60 points over ICP at the same prior strength. The category size prior suppresses rare, extremely large boxes.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Correspondence and category size prior"><table class="study-table wide-study-table">
+<caption class="sr-only">Correspondence and category size prior</caption>
+<thead><tr><th scope="col">Correspondence</th><th scope="col">λ</th><th scope="col">mAP ↑</th><th scope="col">NDS ↑</th><th scope="col">Volume ratio<br>p99 ↓</th><th scope="col">Volume &gt;20×<br>(%) ↓</th></tr></thead>
+<tbody>
+<tr><th scope="row">ICP</th><td>1</td><td>21.80</td><td>20.72</td><td>15.88</td><td>0.54</td></tr>
+<tr class="default-row"><th scope="row">Dense matching (default)</th><td>1</td><td>31.40</td><td>31.13</td><td>4.41</td><td>0.05</td></tr>
+<tr><th scope="row">Dense matching</th><td>0</td><td>31.99</td><td>31.65</td><td>12.65</td><td>0.72</td></tr>
+<tr><th scope="row">Dense matching</th><td>0.1</td><td>32.24</td><td>31.93</td><td>7.57</td><td>0.23</td></tr>
+<tr><th scope="row">Dense matching</th><td>10</td><td>29.77</td><td>29.03</td><td>3.30</td><td>0.00</td></tr>
+</tbody></table></div>
+<p class="table-note">The highlighted row is the default setting. Volume ratio is box volume divided by class-prior volume; p99 is its 99th percentile. With λ = 1, boxes above 20× the prior volume decrease from 0.72% to 0.05% compared with no prior. <a href="./static/paper/AmodalBox.pdf#page=8" target="_blank" rel="noopener">Table 4b</a>.</p>
+      </div>
+      <div class="study-block">
+        <h3>Robustness to imperfect assets and motion estimates</h3>
+        <div class="study-columns">
+          <div><h4>Generated asset quality</h4><p>Removing half the amodal geometry has the largest effect on mAP. Appearance corruption mainly reduces coverage.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Sensitivity to generated asset quality"><table class="study-table">
+<caption class="sr-only">Sensitivity to generated asset quality</caption>
+<thead><tr><th scope="col">Asset corruption</th><th scope="col">mAP ↑</th><th scope="col">Coverage<br>(%) ↑</th><th scope="col">mATE ↓</th><th scope="col">mASE ↓</th></tr></thead>
+<tbody>
+<tr><th scope="row">Amodal half removed</th><td>19.3</td><td>41.2</td><td>0.826</td><td>0.708</td></tr>
+<tr><th scope="row">Same-class swap</th><td>21.2</td><td>39.7</td><td>0.658</td><td>0.609</td></tr>
+<tr><th scope="row">Appearance flattening</th><td>24.8</td><td>43.5</td><td>0.593</td><td>0.538</td></tr>
+<tr><th scope="row">Anisotropic extent (30%)</th><td>29.0</td><td>50.7</td><td>0.597</td><td>0.597</td></tr>
+<tr class="default-row"><th scope="row">None (AmodalBox)</th><td>31.4</td><td>51.1</td><td>0.518</td><td>0.499</td></tr>
+</tbody></table></div>
+<p class="table-note">Coverage is recall at a 2 m center distance. mATE and mASE measure translation and scale error. The highlighted row uses unmodified assets. <a href="./static/paper/AmodalBox.pdf#page=8" target="_blank" rel="noopener">Table 5a</a>.</p>
+          </div>
+          <div><h4>Motion-state errors</h4><p>At a 40% flip rate, dynamic-to-static errors cost 3.46 mAP relative to the oracle, versus 0.99 for the reverse.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Sensitivity to motion state errors"><table class="study-table">
+<caption class="sr-only">Sensitivity to motion state errors</caption>
+<thead><tr><th scope="col">Motion state</th><th scope="col">mAP ↑</th><th scope="col">NDS ↑</th></tr></thead>
+<tbody>
+<tr class="default-row"><th scope="row">Estimated (AmodalBox)</th><td>31.40</td><td>31.13</td></tr>
+<tr><th scope="row">Oracle</th><td>33.50</td><td>32.01</td></tr>
+<tr><th scope="row">Dynamic to static: 10%</th><td>32.79</td><td>31.78</td></tr>
+<tr><th scope="row">Dynamic to static: 20%</th><td>31.49</td><td>31.09</td></tr>
+<tr><th scope="row">Dynamic to static: 40%</th><td>30.04</td><td>30.55</td></tr>
+<tr><th scope="row">Static to dynamic: 10%</th><td>33.08</td><td>31.72</td></tr>
+<tr><th scope="row">Static to dynamic: 20%</th><td>33.16</td><td>31.91</td></tr>
+<tr><th scope="row">Static to dynamic: 40%</th><td>32.51</td><td>31.27</td></tr>
+</tbody></table></div>
+<p class="table-note">Oracle motion states come from human annotation tracks. Each flip rate is applied to oracle states. The highlighted row uses estimated motion states. <a href="./static/paper/AmodalBox.pdf#page=8" target="_blank" rel="noopener">Table 5b</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tinted" id="supplement" aria-labelledby="supplement-title">
+      <div class="container">
+        <div class="section-heading centered"><p class="eyebrow">Supplementary experiments</p><h2 id="supplement-title">Sparse observations and practical behavior</h2><p>Additional analysis of LiDAR visibility, small objects, cross-view association, and runtime.</p></div>
+        <div class="study-block">
+          <h3>Distance and LiDAR visibility</h3>
+          <p>Detectors trained with AmodalBox annotations improve over OV-SCAN in every reported distance–visibility subset. The table below focuses on the lowest point-density tertile.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Low LiDAR visibility subset by distance"><table class="study-table">
+<caption class="sr-only">Low LiDAR visibility subset by distance</caption>
+<thead><tr><th scope="col">Distance</th><th scope="col">OV-SCAN<br>mAP ↑</th><th scope="col">AmodalBox<br>mAP ↑</th><th scope="col">OV-SCAN<br>NDS ↑</th><th scope="col">AmodalBox<br>NDS ↑</th></tr></thead>
+<tbody>
+<tr><th scope="row">0–10 m</th><td>2.18</td><td>7.37</td><td>10.48</td><td>18.51</td></tr>
+<tr><th scope="row">10–20 m</th><td>3.05</td><td>7.27</td><td>13.81</td><td>17.28</td></tr>
+<tr><th scope="row">20–30 m</th><td>2.88</td><td>6.55</td><td>12.96</td><td>16.51</td></tr>
+<tr><th scope="row">30–40 m</th><td>2.63</td><td>4.17</td><td>13.36</td><td>13.76</td></tr>
+</tbody></table></div>
+<p class="table-note">nuScenes validation. Visibility is a proxy based on class-specific LiDAR point-count tertiles. Human boxes with zero LiDAR points are excluded. Values are downstream detector results. <a href="./static/paper/AmodalBox.pdf#page=18" target="_blank" rel="noopener">Table 11</a>.</p>
+          <details class="study-details"><summary>All distance and point-density subsets</summary>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Full distance and LiDAR visibility results"><table class="study-table wide-study-table">
+<caption class="sr-only">Full distance and LiDAR visibility results</caption>
+<thead><tr><th scope="col">Distance</th><th scope="col">Point density</th><th scope="col">OV-SCAN<br>mAP ↑</th><th scope="col">AmodalBox<br>mAP ↑</th><th scope="col">OV-SCAN<br>NDS ↑</th><th scope="col">AmodalBox<br>NDS ↑</th></tr></thead>
+<tbody>
+<tr><th scope="row">0–10 m</th><td>Low</td><td>2.18</td><td>7.37</td><td>10.48</td><td>18.51</td></tr>
+<tr><th scope="row">0–10 m</th><td>Mid</td><td>4.75</td><td>11.27</td><td>15.24</td><td>17.64</td></tr>
+<tr><th scope="row">0–10 m</th><td>High</td><td>54.15</td><td>64.92</td><td>47.34</td><td>51.44</td></tr>
+<tr><th scope="row">10–20 m</th><td>Low</td><td>3.05</td><td>7.27</td><td>13.81</td><td>17.28</td></tr>
+<tr><th scope="row">10–20 m</th><td>Mid</td><td>11.67</td><td>22.77</td><td>22.67</td><td>26.27</td></tr>
+<tr><th scope="row">10–20 m</th><td>High</td><td>43.04</td><td>60.48</td><td>37.61</td><td>45.51</td></tr>
+<tr><th scope="row">20–30 m</th><td>Low</td><td>2.88</td><td>6.55</td><td>12.96</td><td>16.51</td></tr>
+<tr><th scope="row">20–30 m</th><td>Mid</td><td>18.05</td><td>32.20</td><td>23.33</td><td>30.90</td></tr>
+<tr><th scope="row">20–30 m</th><td>High</td><td>27.46</td><td>46.77</td><td>28.21</td><td>38.86</td></tr>
+<tr><th scope="row">30–40 m</th><td>Low</td><td>2.63</td><td>4.17</td><td>13.36</td><td>13.76</td></tr>
+<tr><th scope="row">30–40 m</th><td>Mid</td><td>15.41</td><td>25.87</td><td>19.50</td><td>26.01</td></tr>
+<tr><th scope="row">30–40 m</th><td>High</td><td>10.45</td><td>23.81</td><td>16.04</td><td>24.81</td></tr>
+</tbody></table></div>
+
+          </details>
+        </div>
+        <div class="study-block">
+          <h3>Small, deformable, and thin objects</h3>
+          <p>79% of ground-truth pedestrians have at most 15 LiDAR points. These sparse instances limit recall; with at least 16 points, AmodalBox recovers 96.3–98.6% of pedestrians.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Pedestrian recall by LiDAR density"><table class="study-table">
+<caption class="sr-only">Pedestrian recall by LiDAR density</caption>
+<thead><tr><th scope="col">LiDAR points</th><th scope="col">GT share<br>(%)</th><th scope="col">AmodalBox<br>recall (%) ↑</th><th scope="col">OpenBox<br>recall (%) ↑</th></tr></thead>
+<tbody>
+<tr><th scope="row">1–5</th><td>46</td><td>15.6</td><td>40.3</td></tr>
+<tr><th scope="row">6–15</th><td>33</td><td>63.0</td><td>66.2</td></tr>
+<tr><th scope="row">16–40</th><td>12</td><td>96.3</td><td>74.3</td></tr>
+<tr><th scope="row">&gt;40</th><td>9</td><td>98.6</td><td>67.9</td></tr>
+</tbody></table></div>
+<p class="table-note">Recall uses a 2 m center-distance threshold. Overall pedestrian precision is 94.9% for AmodalBox and 78.8% for OpenBox. <a href="./static/paper/AmodalBox.pdf#page=16" target="_blank" rel="noopener">Table 8b</a>.</p>
+          <details class="study-details"><summary>Per-class raw annotation quality</summary>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Raw annotation quality per superclass"><table class="study-table">
+<caption class="sr-only">Raw annotation quality per superclass</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Coverage<br>(%) ↑</th><th scope="col">Precision<br>(%) ↑</th><th scope="col">ATE ↓</th><th scope="col">ASE ↓</th></tr></thead>
+<tbody>
+<tr><th scope="row">Vehicle</th><td>62.3</td><td>81.0</td><td>0.35</td><td>0.25</td></tr>
+<tr><th scope="row">Pedestrian</th><td>47.8</td><td>94.9</td><td>0.26</td><td>0.40</td></tr>
+<tr><th scope="row">Cyclist</th><td>60.7</td><td>82.3</td><td>0.31</td><td>0.48</td></tr>
+</tbody></table></div>
+<p class="table-note">Coverage is recall at 2 m. ATE and ASE are translation and scale errors of matched annotations. Pedestrians have the lowest coverage; cyclists have the largest scale error. <a href="./static/paper/AmodalBox.pdf#page=16" target="_blank" rel="noopener">Table 8a</a>.</p>
+          </details>
+          <h4 class="study-subheading">Density-conditioned fallback</h4>
+          <p>For pedestrians with at most 15 LiDAR points, fitting the observed points with a category size prior raises detector AP from 46.7 to 62.0.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Density fallback under the nuScenes 3-class protocol"><table class="study-table">
+<caption class="sr-only">Density fallback under the nuScenes 3-class protocol</caption>
+<thead><tr><th scope="col">Annotation source</th><th scope="col">Vehicle<br>AP ↑</th><th scope="col">Pedestrian<br>AP ↑</th><th scope="col">Cyclist<br>AP ↑</th></tr></thead>
+<tbody>
+<tr><th scope="row">OpenBox (reported)</th><td>40.9</td><td>62.7</td><td>5.2</td></tr>
+<tr><th scope="row">AmodalBox</th><td>59.5</td><td>46.7</td><td>25.1</td></tr>
+<tr class="default-row"><th scope="row">AmodalBox + density fallback</th><td>60.1</td><td>62.0</td><td>26.6</td></tr>
+</tbody></table></div>
+<p class="table-note">nuScenes 3-class detector protocol. OpenBox numbers are reported from its paper. The fallback approaches OpenBox’s pedestrian AP of 62.7 while retaining the vehicle and cyclist gains. <a href="./static/paper/AmodalBox.pdf#page=7" target="_blank" rel="noopener">Table 3</a>.</p>
+        </div>
+        <div class="study-block">
+          <h3>Cross-view association and duplicate removal</h3>
+          <p>Associating tracks across cameras and applying class-wise BEV NMS reduces residual duplicates and improves direct annotation mAP by 2.2 points.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Effect of cross-view association and duplicate removal"><table class="study-table">
+<caption class="sr-only">Effect of cross-view association and duplicate removal</caption>
+<thead><tr><th scope="col">Cross-view association &amp; NMS</th><th scope="col">mAP ↑</th><th scope="col">NDS ↑</th><th scope="col">Boxes /<br>keyframe</th></tr></thead>
+<tbody>
+<tr><th scope="row">Off</th><td>29.2</td><td>29.6</td><td>18.7</td></tr>
+<tr class="default-row"><th scope="row">On (AmodalBox)</th><td>31.4</td><td>31.1</td><td>13.8</td></tr>
+</tbody></table></div>
+<p class="table-note">Direct annotation evaluation on 50 nuScenes training scenes. The average number of annotated boxes per keyframe decreases from 18.7 to 13.8. <a href="./static/paper/AmodalBox.pdf#page=17" target="_blank" rel="noopener">Table 10</a>.</p>
+        </div>
+        <div class="study-block">
+          <h3>Runtime breakdown</h3>
+          <p>Asset generation and rendering run once per track. Matching, alignment, and box fitting run for each track-frame and account for most of the annotation time.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Training split annotation runtime on 4 NVIDIA B200 GPUs"><table class="study-table">
+<caption class="sr-only">Training split annotation runtime on 4 NVIDIA B200 GPUs</caption>
+<thead><tr><th scope="col">Stage</th><th scope="col">Runs per</th><th scope="col">nuScenes</th><th scope="col">Waymo</th></tr></thead>
+<tbody>
+<tr><th scope="row">2D instance &amp; motion cues</th><td>Frame</td><td>~4 h</td><td>~18 h</td></tr>
+<tr><th scope="row">Asset generation &amp; rendering</th><td>Track</td><td>~11 h</td><td>~38 h</td></tr>
+<tr><th scope="row">Matching, alignment &amp; box fitting</th><td>Track-frame</td><td>~35 h</td><td>~100 h</td></tr>
+<tr class="default-row"><th scope="row">Total</th><td>Training split</td><td>~50 h</td><td>~156 h</td></tr>
+</tbody></table></div>
+<p class="table-note">Approximate wall-clock runtime for the complete training splits on 4 NVIDIA B200 GPUs. <a href="./static/paper/AmodalBox.pdf#page=17" target="_blank" rel="noopener">Table 9</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="failure-cases" aria-labelledby="failure-title">
+      <div class="section-heading centered"><p class="eyebrow">Limitations</p><h2 id="failure-title">Failure cases</h2><p>Detection errors, incorrect motion states, and unreliable image matching can propagate into 3D annotations.</p></div>
+      <figure class="paper-figure failure-figure"><a class="figure-link" href="./static/images/failure-cases.webp" target="_blank" rel="noopener" aria-label="Open all three failure cases at full resolution"><img src="./static/images/failure-cases.webp" width="2200" height="2055" loading="lazy" alt="Three failure cases: a reflected vehicle detected on glass, a dynamic truck classified as static, and incorrect wheel correspondences in rain. Original orange dashed failure highlights are preserved."></a><figcaption>Red boxes: human annotations. Blue boxes: AmodalBox. Orange dashed regions highlight the failure locations. <a href="./static/paper/AmodalBox.pdf#page=18" target="_blank" rel="noopener">Appendix, Figure 5</a>.</figcaption></figure>
+      <div class="failure-notes">
+<article><span class="failure-letter">A</span><h3>Reflection-induced false positives</h3><p>A vehicle reflected in glass is detected as a real instance. The flat glass point cloud can still align with part of the generated vehicle asset, producing false boxes.</p></article>
+<article><span class="failure-letter">B</span><h3>Incorrect motion state</h3><p>A moving truck is temporarily classified as static. Aggregating its observations with the wrong motion model yields an erroneous box.</p></article>
+<article><span class="failure-letter">C</span><h3>Matching errors in adverse weather</h3><p>The real rear wheel is matched to the rendered front wheel. Incorrect 2D correspondences propagate into erroneous 3D alignment.</p></article>
+      </div>
+      <div class="study-block asset-failure-block">
+        <h3>3D asset generation errors</h3>
+        <p>The image-to-3D model can also fail when the input is distant or the instance mask overlaps multiple objects.</p>
+        <figure class="paper-figure"><a class="figure-link" href="./static/images/asset-generation-failures.webp" target="_blank" rel="noopener" aria-label="Open the additional 3D asset generation failures at full resolution"><img src="./static/images/asset-generation-failures.webp" width="2600" height="635" loading="lazy" alt="Left pair: a distant seated pedestrian and an incorrectly generated asset. Right pair: an instance mask spanning two vehicles and the resulting corrupted 3D asset."></a><figcaption>A distant sitting pedestrian produces incorrect geometry (left pair). A mask overlapping two vehicles corrupts the generated asset (right pair). <a href="./static/paper/AmodalBox-rebuttal-examples.pdf" target="_blank" rel="noopener">Rebuttal, Figure 1(A)</a>.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="section citation-section" id="citation" aria-labelledby="citation-title">
+      <div class="container reading-width"><div class="citation-heading"><h2 id="citation-title">BibTeX</h2><button class="button copy-button" id="copy-citation" type="button" hidden>Copy citation</button></div><pre><code id="bibtex">@inproceedings{lee2026amodalbox,
+  title     = {AmodalBox: Automated 3D Bounding Box Annotation
+               under Partial Visibility},
+  author    = {Lee, In-Jae and Kim, Namtae and Exley, Robert
+               and Ryu, Kwonyoung and Park, Jaesik},
+  booktitle = {Conference on Robot Learning},
+  year      = {2026}
+}</code></pre><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p></div>
+    </section>
+  </main>
+  <footer class="footer container"><a class="wordmark" href="#top">Amodal<span>Box</span></a><p>CoRL 2026</p><p><a href="../">In-Jae Lee</a><span aria-hidden="true"> / </span><a href="../OpenBox/">OpenBox</a></p></footer>
+</body>
+</html>

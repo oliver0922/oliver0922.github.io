@@ -1,0 +1,520 @@
+{
+  "source": "AmodalBox_supple2.pptx",
+  "visible_slides": [
+    12,
+    13,
+    14
+  ],
+  "notes": "Three visible qualitative slides. Slide 16 is hidden. Ellipses are exact PowerPoint shapes converted to per-video SVG overlays. Method labels appear above videos in the source. Descriptive captions below are verbatim speaker notes, with sentence boundaries restored between XML runs.",
+  "scenes": [
+    {
+      "scene": 20,
+      "slide": 12,
+      "caption": "OpenBox can sometimes produce mislocalized boxes because it relies only on distant, partially observed point clouds for annotation. In contrast, AmodalBox first recovers the full object extent and then generates the bounding box, making it less vulnerable to this issue.",
+      "caption_source": "ppt/notesSlides/notesSlide12.xml",
+      "caption_runs_have_explicit_color": false,
+      "videos": {
+        "openbox": {
+          "source": "ppt/media/media12.mp4",
+          "source_shape_id": "15",
+          "source_shape_name": "scene-20_openbox",
+          "source_box_emu": [
+            -2,
+            2184397,
+            3947729,
+            2717799
+          ],
+          "video": "static/videos/scene20-openbox.mp4",
+          "poster": "static/images/scene20-openbox.jpg",
+          "overlay": "static/images/scene20-openbox-overlay.svg",
+          "highlights": [
+            {
+              "source_shape_id": "20",
+              "shape": "ellipse",
+              "color": "#ff0000",
+              "stroke_style": "dash",
+              "stroke_width_emu": 19050,
+              "source_box_emu": [
+                1514476,
+                2643188,
+                499381,
+                437469
+              ],
+              "rotation_degrees": 0.0,
+              "normalized_box": [
+                0.3836327164301298,
+                0.16880976113391755,
+                0.12649829813545965,
+                0.16096444218281042
+              ],
+              "start": 1.0,
+              "end": 2.0,
+              "events": [
+                {
+                  "time": 1.0,
+                  "visible": true
+                },
+                {
+                  "time": 2.0,
+                  "visible": false
+                }
+              ]
+            }
+          ],
+          "preview": "static/images/scene20-openbox-preview.jpg",
+          "encoded_metadata": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 720,
+                "height": 496,
+                "pix_fmt": "yuv420p",
+                "r_frame_rate": "20/1",
+                "nb_frames": "114"
+              }
+            ],
+            "format": {
+              "duration": "5.700000"
+            }
+          }
+        },
+        "human": {
+          "source": "ppt/media/media13.mp4",
+          "source_shape_id": "16",
+          "source_shape_name": "scene-20_human",
+          "source_box_emu": [
+            8244271,
+            2184397,
+            3947729,
+            2717799
+          ],
+          "video": "static/videos/scene20-human.mp4",
+          "poster": "static/images/scene20-human.jpg",
+          "overlay": null,
+          "highlights": [],
+          "preview": "static/images/scene20-human-preview.jpg",
+          "encoded_metadata": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 720,
+                "height": 496,
+                "pix_fmt": "yuv420p",
+                "r_frame_rate": "20/1",
+                "nb_frames": "114"
+              }
+            ],
+            "format": {
+              "duration": "5.700000"
+            }
+          }
+        },
+        "amodalbox": {
+          "source": "ppt/media/media14.mp4",
+          "source_shape_id": "17",
+          "source_shape_name": "scene-20_amodal_box",
+          "source_box_emu": [
+            4122135,
+            2184397,
+            3947730,
+            2717800
+          ],
+          "video": "static/videos/scene20-amodalbox.mp4",
+          "poster": "static/images/scene20-amodalbox.jpg",
+          "overlay": "static/images/scene20-amodalbox-overlay.svg",
+          "highlights": [
+            {
+              "source_shape_id": "21",
+              "shape": "ellipse",
+              "color": "#ff0000",
+              "stroke_style": "dash",
+              "stroke_width_emu": 19050,
+              "source_box_emu": [
+                5629272,
+                2654070,
+                499381,
+                437469
+              ],
+              "rotation_degrees": 0.0,
+              "normalized_box": [
+                0.38177306958682583,
+                0.17281367282360732,
+                0.12649826609215928,
+                0.1609643829568033
+              ],
+              "start": 1.0,
+              "end": 2.0,
+              "events": [
+                {
+                  "time": 1.0,
+                  "visible": true
+                },
+                {
+                  "time": 2.0,
+                  "visible": false
+                }
+              ]
+            }
+          ],
+          "preview": "static/images/scene20-amodalbox-preview.jpg",
+          "encoded_metadata": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 720,
+                "height": 496,
+                "pix_fmt": "yuv420p",
+                "r_frame_rate": "20/1",
+                "nb_frames": "114"
+              }
+            ],
+            "format": {
+              "duration": "5.700000"
+            }
+          }
+        }
+      },
+      "preview_time": 1.2
+    },
+    {
+      "scene": 0,
+      "slide": 13,
+      "caption": "OpenBox relies on local point clouds for height refinement, so when local points are missing, the box can be shifted downward. AmodalBox instead aligns a 3D asset through matching and generates the box from the aligned asset, leading to more precise localization.",
+      "caption_source": "ppt/notesSlides/notesSlide13.xml",
+      "caption_runs_have_explicit_color": false,
+      "videos": {
+        "amodalbox": {
+          "source": "ppt/media/media16.mp4",
+          "source_shape_id": "6",
+          "source_shape_name": "scene-0_amodal_box",
+          "source_box_emu": [
+            4122134,
+            2184398,
+            3947730,
+            2717800
+          ],
+          "video": "static/videos/scene0-amodalbox.mp4",
+          "poster": "static/images/scene0-amodalbox.jpg",
+          "overlay": "static/images/scene0-amodalbox-overlay.svg",
+          "highlights": [
+            {
+              "source_shape_id": "14",
+              "shape": "ellipse",
+              "color": "#ff0000",
+              "stroke_style": "dash",
+              "stroke_width_emu": 19050,
+              "source_box_emu": [
+                5650898,
+                2612675,
+                1143000,
+                480568
+              ],
+              "rotation_degrees": 0.0,
+              "normalized_box": [
+                0.38725140777104816,
+                0.157582235631761,
+                0.289533478733348,
+                0.17682242990654207
+              ],
+              "start": 1.0,
+              "end": null,
+              "events": [
+                {
+                  "time": 1.0,
+                  "visible": true
+                }
+              ]
+            }
+          ],
+          "preview": "static/images/scene0-amodalbox-preview.jpg",
+          "encoded_metadata": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 720,
+                "height": 496,
+                "pix_fmt": "yuv420p",
+                "r_frame_rate": "10/1",
+                "nb_frames": "23"
+              }
+            ],
+            "format": {
+              "duration": "2.300000"
+            }
+          }
+        },
+        "human": {
+          "source": "ppt/media/media17.mp4",
+          "source_shape_id": "7",
+          "source_shape_name": "scene-0_human",
+          "source_box_emu": [
+            8244271,
+            2184399,
+            3947729,
+            2717799
+          ],
+          "video": "static/videos/scene0-human.mp4",
+          "poster": "static/images/scene0-human.jpg",
+          "overlay": null,
+          "highlights": [],
+          "preview": "static/images/scene0-human-preview.jpg",
+          "encoded_metadata": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 720,
+                "height": 496,
+                "pix_fmt": "yuv420p",
+                "r_frame_rate": "10/1",
+                "nb_frames": "23"
+              }
+            ],
+            "format": {
+              "duration": "2.300000"
+            }
+          }
+        },
+        "openbox": {
+          "source": "ppt/media/media18.mp4",
+          "source_shape_id": "8",
+          "source_shape_name": "scene-0_openbox",
+          "source_box_emu": [
+            -2,
+            2184398,
+            3947729,
+            2717799
+          ],
+          "video": "static/videos/scene0-openbox.mp4",
+          "poster": "static/images/scene0-openbox.jpg",
+          "overlay": "static/images/scene0-openbox-overlay.svg",
+          "highlights": [
+            {
+              "source_shape_id": "13",
+              "shape": "ellipse",
+              "color": "#ff0000",
+              "stroke_style": "dash",
+              "stroke_width_emu": 19050,
+              "source_box_emu": [
+                1514476,
+                2643188,
+                1143000,
+                450055
+              ],
+              "rotation_degrees": 0.0,
+              "normalized_box": [
+                0.3836327164301298,
+                0.16880939318912105,
+                0.28953355207512976,
+                0.1655953953916386
+              ],
+              "start": 1.0,
+              "end": null,
+              "events": [
+                {
+                  "time": 1.0,
+                  "visible": true
+                }
+              ]
+            }
+          ],
+          "preview": "static/images/scene0-openbox-preview.jpg",
+          "encoded_metadata": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 720,
+                "height": 496,
+                "pix_fmt": "yuv420p",
+                "r_frame_rate": "10/1",
+                "nb_frames": "23"
+              }
+            ],
+            "format": {
+              "duration": "2.300000"
+            }
+          }
+        }
+      },
+      "preview_time": 1.2
+    },
+    {
+      "scene": 2,
+      "slide": 14,
+      "caption": "OpenBox may miss pedestrians when the unprojected instance-level point cloud is filtered out during refinement. AmodalBox avoids this failure mode, achieving higher recall and successfully annotating those pedestrians.",
+      "caption_source": "ppt/notesSlides/notesSlide14.xml",
+      "caption_runs_have_explicit_color": false,
+      "videos": {
+        "human": {
+          "source": "ppt/media/media20.mp4",
+          "source_shape_id": "8",
+          "source_shape_name": "scene-2_human",
+          "source_box_emu": [
+            8223658,
+            2184397,
+            3968342,
+            2731990
+          ],
+          "video": "static/videos/scene2-human.mp4",
+          "poster": "static/images/scene2-human.jpg",
+          "overlay": null,
+          "highlights": [],
+          "preview": "static/images/scene2-human-preview.jpg",
+          "encoded_metadata": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 720,
+                "height": 496,
+                "pix_fmt": "yuv420p",
+                "r_frame_rate": "10/1",
+                "nb_frames": "71"
+              }
+            ],
+            "format": {
+              "duration": "7.100000"
+            }
+          }
+        },
+        "amodalbox": {
+          "source": "ppt/media/media21.mp4",
+          "source_shape_id": "15",
+          "source_shape_name": "scene-2_amodal_box",
+          "source_box_emu": [
+            4122135,
+            2204575,
+            3968342,
+            2731990
+          ],
+          "video": "static/videos/scene2-amodalbox.mp4",
+          "poster": "static/images/scene2-amodalbox.jpg",
+          "overlay": "static/images/scene2-amodalbox-overlay.svg",
+          "highlights": [
+            {
+              "source_shape_id": "18",
+              "shape": "ellipse",
+              "color": "#ff0000",
+              "stroke_style": "dash",
+              "stroke_width_emu": 19050,
+              "source_box_emu": [
+                6764029,
+                2503348,
+                535050,
+                2555389
+              ],
+              "rotation_degrees": 333.69535,
+              "normalized_box": [
+                0.6657425191679548,
+                0.10936094202394592,
+                0.13482960893995527,
+                0.935358108924264
+              ],
+              "start": 0.0,
+              "end": null,
+              "events": [
+                {
+                  "time": 0.0,
+                  "visible": true
+                }
+              ]
+            }
+          ],
+          "preview": "static/images/scene2-amodalbox-preview.jpg",
+          "encoded_metadata": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 720,
+                "height": 496,
+                "pix_fmt": "yuv420p",
+                "r_frame_rate": "10/1",
+                "nb_frames": "71"
+              }
+            ],
+            "format": {
+              "duration": "7.100000"
+            }
+          }
+        },
+        "openbox": {
+          "source": "ppt/media/media22.mp4",
+          "source_shape_id": "16",
+          "source_shape_name": "scene-2_openbox",
+          "source_box_emu": [
+            0,
+            2204575,
+            3947727,
+            2717798
+          ],
+          "video": "static/videos/scene2-openbox.mp4",
+          "poster": "static/images/scene2-openbox.jpg",
+          "overlay": "static/images/scene2-openbox-overlay.svg",
+          "highlights": [
+            {
+              "source_shape_id": "17",
+              "shape": "ellipse",
+              "color": "#ff0000",
+              "stroke_style": "dash",
+              "stroke_width_emu": 19050,
+              "source_box_emu": [
+                2594166,
+                2469172,
+                535050,
+                2555389
+              ],
+              "rotation_degrees": 333.69535,
+              "normalized_box": [
+                0.6571290263992419,
+                0.09735712514322256,
+                0.1355336881197712,
+                0.9402424315567235
+              ],
+              "start": 0.0,
+              "end": null,
+              "events": [
+                {
+                  "time": 0.0,
+                  "visible": true
+                }
+              ]
+            }
+          ],
+          "preview": "static/images/scene2-openbox-preview.jpg",
+          "encoded_metadata": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 720,
+                "height": 496,
+                "pix_fmt": "yuv420p",
+                "r_frame_rate": "10/1",
+                "nb_frames": "71"
+              }
+            ],
+            "format": {
+              "duration": "7.100000"
+            }
+          }
+        }
+      },
+      "preview_time": 4.2
+    }
+  ]
+}
